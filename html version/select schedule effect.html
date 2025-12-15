@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Select Schedule Effect</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1c2536",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem", 
+                        "lg": "1.5rem", 
+                        "xl": "2rem", 
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hiding for chips */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Radio button animation simulation */
+        .radio-selected {
+            border-color: #2b6cee;
+            background-color: #2b6cee;
+        }
+        .radio-selected span {
+            display: block;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white transition-colors duration-200">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden pb-24">
+<!-- Header Section -->
+<header class="sticky top-0 z-20 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md">
+<div class="flex items-center justify-between px-4 py-3">
+<a href="chose schedule action.html" class="flex items-center justify-center text-slate-500 dark:text-[#92a4c9] hover:text-slate-900 dark:hover:text-white transition-colors">
+<span class="text-base font-bold leading-normal tracking-[0.015em]">Cancel</span>
+</a>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em] absolute left-1/2 -translate-x-1/2">Select Effect</h2>
+<div class="w-12"></div> <!-- Spacer for centering -->
+</div>
+<!-- Step Indicator -->
+<div class="flex flex-col items-center justify-center pb-2">
+<p class="text-slate-500 dark:text-[#92a4c9] text-xs font-medium uppercase tracking-wider">Step 2 of 3</p>
+<!-- Progress bar -->
+<div class="mt-2 flex h-1 w-16 gap-1">
+<div class="h-full flex-1 rounded-full bg-primary/40"></div>
+<div class="h-full flex-1 rounded-full bg-primary"></div>
+<div class="h-full flex-1 rounded-full bg-slate-300 dark:bg-slate-700"></div>
+</div>
+</div>
+</header>
+<!-- Search Bar -->
+<div class="px-4 py-3">
+<label class="flex flex-col w-full h-12">
+<div class="flex w-full flex-1 items-stretch rounded-xl h-full shadow-sm">
+<div class="text-slate-400 dark:text-[#92a4c9] flex border-none bg-surface-light dark:bg-surface-dark items-center justify-center pl-4 rounded-l-xl border-r-0">
+<span class="material-symbols-outlined text-2xl">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-xl rounded-l-none border-none bg-surface-light dark:bg-surface-dark text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#92a4c9] px-4 pl-2 text-base font-normal focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="Search effects..." value=""/>
+</div>
+</label>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-3 px-4 py-1 overflow-x-auto no-scrollbar mask-linear-gradient">
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-700 px-5 transition-all hover:bg-slate-100 dark:hover:bg-[#2a3649]">
+<p class="text-slate-700 dark:text-white text-sm font-medium leading-normal">All</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary px-5 shadow-lg shadow-primary/25">
+<span class="material-symbols-outlined text-[18px] text-white">star</span>
+<p class="text-white text-sm font-medium leading-normal">Favorites</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-700 px-5 transition-all hover:bg-slate-100 dark:hover:bg-[#2a3649]">
+<p class="text-slate-700 dark:text-white text-sm font-medium leading-normal">Dynamic</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-700 px-5 transition-all hover:bg-slate-100 dark:hover:bg-[#2a3649]">
+<p class="text-slate-700 dark:text-white text-sm font-medium leading-normal">Static</p>
+</button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-700 px-5 transition-all hover:bg-slate-100 dark:hover:bg-[#2a3649]">
+<p class="text-slate-700 dark:text-white text-sm font-medium leading-normal">Music</p>
+</button>
+</div>
+<!-- Content Area -->
+<div class="flex flex-col gap-6 pt-6">
+<!-- Section: Favorites -->
+<div class="flex flex-col gap-3">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4">Favorites</h3>
+<div class="px-4 space-y-3">
+<!-- Selected Effect Card -->
+<div class="group relative flex items-center justify-between p-3 pr-4 rounded-xl bg-surface-light dark:bg-surface-dark border-2 border-primary shadow-sm cursor-pointer transition-all">
+<div class="flex items-center gap-4">
+<!-- Preview Icon: Rainbow -->
+<div class="w-12 h-12 rounded-full bg-gradient-to-br from-red-500 via-green-500 to-blue-600 shadow-inner ring-2 ring-white/10" data-alt="Rainbow color gradient circle"></div>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white font-bold text-base">Rainbow Wave</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs font-medium">Dynamic • Multicolor</span>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-primary bg-primary flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-white text-sm font-bold">check</span>
+</div>
+</div>
+<!-- Effect Card -->
+<div class="group relative flex items-center justify-between p-3 pr-4 rounded-xl bg-surface-light dark:bg-surface-dark border-2 border-transparent hover:border-slate-200 dark:hover:border-slate-700 cursor-pointer transition-all">
+<div class="flex items-center gap-4">
+<!-- Preview Icon: Warm White -->
+<div class="w-12 h-12 rounded-full bg-gradient-to-br from-orange-100 to-orange-300 shadow-inner ring-2 ring-white/10" data-alt="Warm white color gradient circle"></div>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white font-semibold text-base">Cozy Warm</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs font-medium">Static • 3000K</span>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-slate-300 dark:border-slate-600 flex items-center justify-center"></div>
+</div>
+</div>
+</div>
+<!-- Section: Dynamic Effects -->
+<div class="flex flex-col gap-3">
+<h3 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] px-4">Dynamic Effects</h3>
+<div class="px-4 space-y-3">
+<!-- Effect Card -->
+<div class="group relative flex items-center justify-between p-3 pr-4 rounded-xl bg-surface-light dark:bg-surface-dark border-2 border-transparent hover:border-slate-200 dark:hover:border-slate-700 cursor-pointer transition-all">
+<div class="flex items-center gap-4">
+<!-- Preview Icon: Neon City -->
+<div class="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500 shadow-inner ring-2 ring-white/10" data-alt="Pink and purple neon gradient circle"></div>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white font-semibold text-base">Neon City</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs font-medium">Dynamic • Cyberpunk</span>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-slate-300 dark:border-slate-600 flex items-center justify-center"></div>
+</div>
+<!-- Effect Card -->
+<div class="group relative flex items-center justify-between p-3 pr-4 rounded-xl bg-surface-light dark:bg-surface-dark border-2 border-transparent hover:border-slate-200 dark:hover:border-slate-700 cursor-pointer transition-all">
+<div class="flex items-center gap-4">
+<!-- Preview Icon: Ocean Breeze -->
+<div class="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-400 via-blue-500 to-blue-700 shadow-inner ring-2 ring-white/10" data-alt="Blue and cyan ocean gradient circle"></div>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white font-semibold text-base">Ocean Breeze</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs font-medium">Dynamic • Relaxing</span>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-slate-300 dark:border-slate-600 flex items-center justify-center"></div>
+</div>
+<!-- Effect Card -->
+<div class="group relative flex items-center justify-between p-3 pr-4 rounded-xl bg-surface-light dark:bg-surface-dark border-2 border-transparent hover:border-slate-200 dark:hover:border-slate-700 cursor-pointer transition-all">
+<div class="flex items-center gap-4">
+<!-- Preview Icon: Fire -->
+<div class="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 via-orange-500 to-red-600 shadow-inner ring-2 ring-white/10" data-alt="Red, orange and yellow fire gradient circle"></div>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white font-semibold text-base">Fireplace</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs font-medium">Dynamic • Warm</span>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-slate-300 dark:border-slate-600 flex items-center justify-center"></div>
+</div>
+<!-- Effect Card -->
+<div class="group relative flex items-center justify-between p-3 pr-4 rounded-xl bg-surface-light dark:bg-surface-dark border-2 border-transparent hover:border-slate-200 dark:hover:border-slate-700 cursor-pointer transition-all">
+<div class="flex items-center gap-4">
+<!-- Preview Icon: Forest -->
+<div class="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-400 via-green-600 to-teal-800 shadow-inner ring-2 ring-white/10" data-alt="Green forest gradient circle"></div>
+<div class="flex flex-col">
+<span class="text-slate-900 dark:text-white font-semibold text-base">Forest Walk</span>
+<span class="text-slate-500 dark:text-slate-400 text-xs font-medium">Dynamic • Nature</span>
+</div>
+</div>
+<div class="w-6 h-6 rounded-full border-2 border-slate-300 dark:border-slate-600 flex items-center justify-center"></div>
+</div>
+</div>
+</div>
+<div class="h-8"></div>
+</div>
+<!-- Sticky Bottom Action Bar -->
+<div class="fixed bottom-0 left-0 right-0 z-30 p-4 bg-background-light dark:bg-background-dark border-t border-slate-200 dark:border-slate-800/50 backdrop-blur-sm bg-opacity-95 dark:bg-opacity-95">
+<a href="set schedule time.html" class="w-full h-14 bg-primary hover:bg-blue-600 active:scale-[0.98] transition-all rounded-full flex items-center justify-center gap-2 shadow-lg shadow-primary/30 inline-flex">
+<span class="text-white text-lg font-bold">Confirm Selection</span>
+<span class="material-symbols-outlined text-white">arrow_forward</span>
+</a>
+</div>
+</div>
+<script src="app.js"></script>
+</body></html>
