@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Choose Schedule Action</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#2b6cee",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101622",
+              "surface-dark": "#192233",
+              "text-secondary": "#92a4c9"
+            },
+            fontFamily: {
+              "display": ["Spline Sans", "sans-serif"],
+              "body": ["Noto Sans", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "1rem", 
+              "lg": "2rem", 
+              "xl": "3rem", 
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom scrollbar hide for cleaner mobile look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display antialiased overflow-x-hidden">
+<!-- Top App Bar -->
+<div class="sticky top-0 z-50 bg-background-light dark:bg-background-dark px-4 pb-2 pt-4">
+<div class="flex items-center h-12 justify-between">
+<a href="main.html" class="text-black dark:text-white flex size-12 shrink-0 items-center justify-center rounded-full active:bg-black/5 dark:active:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</a>
+<p class="text-black dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">New Schedule</p>
+<a href="main.html" class="flex w-12 items-center justify-end">
+<p class="text-primary text-base font-bold leading-normal tracking-[0.015em] shrink-0">Cancel</p>
+</a>
+</div>
+</div>
+<!-- Main Content Scroll Area -->
+<div class="flex-1 flex flex-col px-4 pb-24">
+<!-- Section Header / Context -->
+<div class="mt-2">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-[20px]">schedule</span>
+<h3 class="text-text-secondary text-sm font-semibold uppercase tracking-wider">At 08:00 AM...</h3>
+</div>
+<h2 class="text-black dark:text-white tracking-tight text-[32px] font-bold leading-tight text-left pb-6">What should happen?</h2>
+</div>
+<!-- Action Option 1: Power Control -->
+<div class="mb-5">
+<div class="flex flex-col gap-4 rounded-2xl bg-white dark:bg-surface-dark p-5 shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="flex items-center gap-4">
+<div class="flex items-center justify-center size-12 rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined filled">power_settings_new</span>
+</div>
+<div class="flex flex-col gap-0.5 flex-1">
+<p class="text-black dark:text-white text-lg font-bold leading-tight">Power</p>
+<p class="text-text-secondary text-sm font-normal">Turn lights On or Off</p>
+</div>
+</div>
+<!-- Segmented Control embedded in card -->
+<div class="flex h-12 w-full items-center justify-center rounded-full bg-gray-100 dark:bg-[#0c101a] p-1 mt-1">
+<label class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-surface-dark has-[:checked]:shadow-sm transition-all duration-200">
+<span class="truncate text-gray-500 dark:text-text-secondary group-has-[:checked]:text-black dark:group-has-[:checked]:text-white text-sm font-bold">Turn On</span>
+<input checked="" class="invisible w-0 fixed" name="power_action" type="radio" value="Turn On"/>
+</label>
+<label class="group flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-full px-2 has-[:checked]:bg-white dark:has-[:checked]:bg-surface-dark has-[:checked]:shadow-sm transition-all duration-200">
+<span class="truncate text-gray-500 dark:text-text-secondary group-has-[:checked]:text-black dark:group-has-[:checked]:text-white text-sm font-bold">Turn Off</span>
+<input class="invisible w-0 fixed" name="power_action" type="radio" value="Turn Off"/>
+</label>
+</div>
+</div>
+</div>
+<!-- Divider with Text -->
+<div class="relative flex py-2 items-center mb-5">
+<div class="flex-grow border-t border-gray-200 dark:border-gray-800"></div>
+<span class="flex-shrink-0 mx-4 text-gray-400 dark:text-gray-600 text-xs font-semibold uppercase">Or choose detailed action</span>
+<div class="flex-grow border-t border-gray-200 dark:border-gray-800"></div>
+</div>
+<!-- Action Option 2: Set Color -->
+<a href="select schedule color.html" class="mb-4 group/card cursor-pointer block">
+<div class="flex items-center justify-between gap-4 rounded-2xl bg-white dark:bg-surface-dark p-4 shadow-sm border border-gray-100 dark:border-gray-800 hover:border-primary/50 transition-colors">
+<div class="size-16 rounded-xl bg-center bg-no-repeat bg-cover shrink-0 shadow-inner" data-alt="Colorful gradient spectrum representing color selection" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD4v1S5bJQLnU0ise9f7OOF1q07tgi8DBvX9lg4hTFkOyTYFajnyjhEIzk7kE7H9F42AbyuXqF2O9a6_ds6P2DKDrCKepDJeb1aOrL8z04EmfLWw2d0BNVa8hd04rTNxa501PsyihbIkb7NrftiBZadX0CkQGsp-X6PJDkZ5tbS6irNGT_FmoYoTWWpX941UWtaiQ2So8iV1org8GodIUpb-0l7ION8iVJFMaxg0rDBDcMpQiMsXbJrh0-YtOwBTGTg8GKJ0qyYljXi");'>
+</div>
+<div class="flex flex-col gap-1 flex-1">
+<p class="text-black dark:text-white text-lg font-bold leading-tight group-hover/card:text-primary transition-colors">Set Color</p>
+<p class="text-text-secondary text-sm font-normal">Choose a specific static color</p>
+</div>
+<div class="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-400 group-hover/card:bg-primary group-hover/card:text-white transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</a>
+</div>
+<!-- Action Option 3: Apply Effect -->
+<a href="select schedule effect.html" class="mb-4 group/card cursor-pointer block">
+<div class="flex items-center justify-between gap-4 rounded-2xl bg-white dark:bg-surface-dark p-4 shadow-sm border border-gray-100 dark:border-gray-800 hover:border-primary/50 transition-colors">
+<div class="size-16 rounded-xl bg-center bg-no-repeat bg-cover shrink-0 shadow-inner relative overflow-hidden" data-alt="Abstract neon light trails representing dynamic lighting effects" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBBSvTk92zHjI7Ys9gQkcZnsNrcwZsAgEsJj0ifjWoenaVUJXxQN2p591PcNq-Aw9iKPh0WUjHp8bWS2M5r7Fpe-bC5vapjGlXpfFKaIxU1tUCSXHGdxCyOD0QYC1T-5hP820Wn1os0q8zx0aK2d81GbOB926oWP1cgWIhT3PGiROz0SxK4sD1kHPxi7WPmpdNXsvMZc8Q5WZ630NOxb-o3NLoR2YIq7Aj0c4xXTI9d69NHV316XlanYb9bkebHGgL1Ww-y_ZgaQRGO");'>
+<div class="absolute inset-0 bg-black/20"></div>
+</div>
+<div class="flex flex-col gap-1 flex-1">
+<p class="text-black dark:text-white text-lg font-bold leading-tight group-hover/card:text-primary transition-colors">Apply Effect</p>
+<p class="text-text-secondary text-sm font-normal">Rainbow, Breathe, Strobe...</p>
+</div>
+<div class="flex items-center justify-center size-8 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-400 group-hover/card:bg-primary group-hover/card:text-white transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</div>
+</a>
+</div>
+</div>
+<!-- Floating Action Button / Bottom Bar -->
+<div class="fixed bottom-0 left-0 w-full bg-white/90 dark:bg-background-dark/90 backdrop-blur-md p-4 border-t border-gray-200 dark:border-gray-800">
+<a href="main.html" class="w-full h-14 bg-primary hover:bg-blue-600 active:bg-blue-700 text-white rounded-xl text-base font-bold tracking-wide shadow-lg shadow-blue-500/20 transition-all flex items-center justify-center gap-2 inline-flex">
+<span class="material-symbols-outlined">check</span>
+      Save Schedule
+    </a>
+</div>
+</body></html>
