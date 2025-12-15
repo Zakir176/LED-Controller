@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Presets Management</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1A2230",
+                        "surface-light": "#FFFFFF",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar hiding for cleaner mobile look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased selection:bg-primary selection:text-white">
+<div class="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden pb-24">
+<!-- Header -->
+<header class="sticky top-0 z-20 flex items-center justify-between bg-background-light/80 dark:bg-background-dark/80 px-5 pt-safe-top pb-4 backdrop-blur-md border-b border-gray-200 dark:border-gray-800/50 pt-12">
+<h1 class="text-2xl font-bold leading-tight tracking-tight flex-1">My Presets</h1>
+<button class="flex items-center justify-center rounded-full p-2 text-primary hover:bg-primary/10 active:scale-95 transition-all">
+<span class="text-base font-semibold leading-normal tracking-wide">Edit</span>
+</button>
+</header>
+<!-- Main Content List -->
+<main class="flex flex-col gap-3 p-5">
+<!-- Section Label -->
+<div class="px-1 pt-2 pb-1">
+<p class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Favorites</p>
+</div>
+<!-- Preset Item: Sunset Glow -->
+<div class="group relative flex items-center justify-between gap-4 rounded-full bg-surface-light dark:bg-surface-dark p-2 pr-5 shadow-sm hover:shadow-md transition-all active:scale-[0.99] cursor-pointer ring-1 ring-gray-200 dark:ring-gray-800/60">
+<div class="flex items-center gap-4 overflow-hidden">
+<!-- Swatch -->
+<div class="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-orange-400 via-pink-500 to-purple-600 shadow-[0_0_15px_-3px_rgba(236,72,153,0.4)]">
+<!-- Active Indicator (Hidden by default, shown for example) -->
+<div class="absolute inset-0 rounded-full ring-2 ring-white/20"></div>
+</div>
+<!-- Info -->
+<div class="flex flex-col min-w-0">
+<p class="truncate text-base font-semibold leading-snug text-slate-900 dark:text-white group-hover:text-primary transition-colors">Sunset Glow</p>
+<p class="truncate text-xs text-slate-500 dark:text-slate-400">Warm gradient • 65% Brightness</p>
+</div>
+</div>
+<!-- Actions -->
+<button aria-label="More options" class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+<!-- Preset Item: Cyberpunk -->
+<div class="group relative flex items-center justify-between gap-4 rounded-full bg-surface-light dark:bg-surface-dark p-2 pr-5 shadow-sm hover:shadow-md transition-all active:scale-[0.99] cursor-pointer ring-1 ring-gray-200 dark:ring-gray-800/60">
+<div class="flex items-center gap-4 overflow-hidden">
+<div class="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-tr from-blue-600 via-purple-500 to-cyan-400 shadow-[0_0_15px_-3px_rgba(59,130,246,0.4)]">
+</div>
+<div class="flex flex-col min-w-0">
+<p class="truncate text-base font-semibold leading-snug text-slate-900 dark:text-white group-hover:text-primary transition-colors">Cyberpunk</p>
+<p class="truncate text-xs text-slate-500 dark:text-slate-400">Neon pulse • 100% Brightness</p>
+</div>
+</div>
+<button class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+<!-- Preset Item: Focus (Active State Example) -->
+<div class="group relative flex items-center justify-between gap-4 rounded-full bg-surface-light dark:bg-surface-dark p-2 pr-5 shadow-sm ring-2 ring-primary dark:ring-primary transition-all cursor-pointer">
+<div class="flex items-center gap-4 overflow-hidden">
+<div class="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+<div class="absolute inset-0 bg-white shadow-[inset_0_0_10px_rgba(0,0,0,0.1)] dark:shadow-[inset_0_0_10px_rgba(255,255,255,0.2)]"></div>
+<span class="material-symbols-outlined absolute text-primary z-10" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<div class="flex flex-col min-w-0">
+<p class="truncate text-base font-bold leading-snug text-primary">Focus</p>
+<p class="truncate text-xs text-primary/70 font-medium">Active • Cool White 6000K</p>
+</div>
+</div>
+<button class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-primary hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+<!-- Section Label -->
+<div class="px-1 pt-4 pb-1 mt-2">
+<p class="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">Standard</p>
+</div>
+<!-- Preset Item: Forest Rain -->
+<div class="group relative flex items-center justify-between gap-4 rounded-full bg-surface-light dark:bg-surface-dark p-2 pr-5 shadow-sm hover:shadow-md transition-all active:scale-[0.99] cursor-pointer ring-1 ring-gray-200 dark:ring-gray-800/60">
+<div class="flex items-center gap-4 overflow-hidden">
+<div class="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-bl from-emerald-600 to-teal-900 shadow-[0_0_15px_-3px_rgba(16,185,129,0.3)]">
+</div>
+<div class="flex flex-col min-w-0">
+<p class="truncate text-base font-semibold leading-snug text-slate-900 dark:text-white group-hover:text-primary transition-colors">Forest Rain</p>
+<p class="truncate text-xs text-slate-500 dark:text-slate-400">Static • 40% Brightness</p>
+</div>
+</div>
+<button class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+<!-- Preset Item: Movie Night -->
+<div class="group relative flex items-center justify-between gap-4 rounded-full bg-surface-light dark:bg-surface-dark p-2 pr-5 shadow-sm hover:shadow-md transition-all active:scale-[0.99] cursor-pointer ring-1 ring-gray-200 dark:ring-gray-800/60">
+<div class="flex items-center gap-4 overflow-hidden">
+<div class="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-r from-red-900 via-red-600 to-orange-900 shadow-[0_0_15px_-3px_rgba(220,38,38,0.3)]">
+</div>
+<div class="flex flex-col min-w-0">
+<p class="truncate text-base font-semibold leading-snug text-slate-900 dark:text-white group-hover:text-primary transition-colors">Movie Night</p>
+<p class="truncate text-xs text-slate-500 dark:text-slate-400">Dimmed Red • 15% Brightness</p>
+</div>
+</div>
+<button class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+<!-- Bottom Spacer -->
+<div class="h-20"></div>
+</main>
+<!-- Toast Notification (Simulated State) -->
+<div class="fixed bottom-24 left-1/2 -translate-x-1/2 z-30 pointer-events-none opacity-0 animate-[fadeIn_0.5s_ease-out_1s_forwards]">
+<div class="flex items-center gap-3 bg-gray-900 dark:bg-white/90 backdrop-blur-md px-4 py-2.5 rounded-full shadow-xl shadow-black/20">
+<span class="material-symbols-outlined text-green-400 dark:text-green-600 text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<p class="text-sm font-medium text-white dark:text-slate-900">Focus applied</p>
+</div>
+</div>
+<!-- Floating Action Button -->
+<div class="fixed bottom-0 left-0 right-0 z-40 p-5 bg-gradient-to-t from-background-light dark:from-background-dark via-background-light/80 dark:via-background-dark/80 to-transparent pb-8">
+<button class="group flex w-full max-w-[480px] mx-auto cursor-pointer items-center justify-center overflow-hidden rounded-full h-14 px-6 bg-primary hover:bg-blue-600 active:bg-blue-700 text-white shadow-lg shadow-primary/30 transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined mr-2 text-[24px]">add</span>
+<span class="text-base font-bold leading-normal tracking-wide">Create Preset</span>
+</button>
+</div>
+</div>
+<!-- Animation Keyframes -->
+<style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, 10px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+    </style>
+<script src="app.js"></script>
+</body></html>
