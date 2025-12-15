@@ -36,6 +36,42 @@
       min-height: max(884px, 100dvh);
     }
   </style>
+    <style>
+        /* Improve range input hit area while keeping custom visuals
+             - keep the native thumb almost invisible but interactive
+             - increase z-index and enlarge vertical hit area */
+        input[type=range] {
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            margin: 0;
+            padding: 0;
+            z-index: 60;
+            position: absolute;
+            left: 0;
+            top: -10px; /* give vertical room for thumb dragging */
+            width: 100%;
+            height: 36px; /* larger hit area */
+            cursor: pointer;
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            background: transparent;
+            height: 4px;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            background: rgba(0,0,0,0.01); /* almost invisible but captures events */
+            border: none;
+            border-radius: 999px;
+            margin-top: -12px; /* center the thumb */
+            box-shadow: none;
+        }
+        input[type=range]::-moz-range-track { background: transparent; height:4px; }
+        input[type=range]::-moz-range-thumb { width:28px; height:28px; background: rgba(0,0,0,0.01); border:none; border-radius:999px; }
+    </style>
   </head>
 <body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-x-hidden min-h-screen flex flex-col selection:bg-primary selection:text-white">
 <!-- Top Header -->
@@ -130,7 +166,8 @@
 <div class="h-8 w-full flex items-center">
 <div class="relative w-full h-1.5 bg-gray-700/50 rounded-full">
 <div class="absolute h-full w-[47%] bg-gradient-to-r from-red-500/50 to-red-500 rounded-full"></div>
-<div class="absolute left-[47%] top-1/2 -translate-y-1/2 -translate-x-1/2 size-5 bg-white rounded-full shadow-lg cursor-pointer hover:scale-110 transition-transform flex items-center justify-center">
+<input type="range" min="0" max="255" value="120" class="absolute left-0 top-0 w-full h-8 bg-transparent" aria-label="Red slider" />
+<div class="absolute left-[47%] top-1/2 -translate-y-1/2 -translate-x-1/2 size-5 bg-white rounded-full shadow-lg pointer-events-none flex items-center justify-center">
 <div class="size-1.5 rounded-full bg-red-500"></div>
 </div>
 </div>
@@ -145,7 +182,8 @@
 <div class="h-8 w-full flex items-center">
 <div class="relative w-full h-1.5 bg-gray-700/50 rounded-full">
 <div class="absolute h-full w-[15%] bg-gradient-to-r from-green-500/50 to-green-500 rounded-full"></div>
-<div class="absolute left-[15%] top-1/2 -translate-y-1/2 -translate-x-1/2 size-5 bg-white rounded-full shadow-lg cursor-pointer hover:scale-110 transition-transform flex items-center justify-center">
+<input type="range" min="0" max="255" value="40" class="absolute left-0 top-0 w-full h-8 bg-transparent" aria-label="Green slider" />
+<div class="absolute left-[15%] top-1/2 -translate-y-1/2 -translate-x-1/2 size-5 bg-white rounded-full shadow-lg pointer-events-none flex items-center justify-center">
 <div class="size-1.5 rounded-full bg-green-500"></div>
 </div>
 </div>
@@ -160,7 +198,8 @@
 <div class="h-8 w-full flex items-center">
 <div class="relative w-full h-1.5 bg-gray-700/50 rounded-full">
 <div class="absolute h-full w-[88%] bg-gradient-to-r from-blue-500/50 to-blue-500 rounded-full"></div>
-<div class="absolute left-[88%] top-1/2 -translate-y-1/2 -translate-x-1/2 size-5 bg-white rounded-full shadow-lg cursor-pointer hover:scale-110 transition-transform flex items-center justify-center">
+<input type="range" min="0" max="255" value="225" class="absolute left-0 top-0 w-full h-8 bg-transparent" aria-label="Blue slider" />
+<div class="absolute left-[88%] top-1/2 -translate-y-1/2 -translate-x-1/2 size-5 bg-white rounded-full shadow-lg pointer-events-none flex items-center justify-center">
 <div class="size-1.5 rounded-full bg-blue-500"></div>
 </div>
 </div>

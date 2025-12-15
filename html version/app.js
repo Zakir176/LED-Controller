@@ -5,6 +5,52 @@
   function save(key, val){ sessionStorage.setItem(key, JSON.stringify(val)) }
   function load(key){ try{ const v = sessionStorage.getItem(key); return v? JSON.parse(v): null }catch(e){return null} }
 
+  // ======== COLOR & BRIGHTNESS MANAGEMENT ========
+  window.colorState = {
+    red: 120,
+    green: 40,
+    blue: 225,
+    brightness: 75
+  };
+
+  // Send color update to backend (placeholder)
+  window.sendColorUpdate = function(payload){
+    console.log('[sendColorUpdate]', payload);
+    // TODO: Replace with actual backend call
+    // fetch('/api/led/color', { method: 'POST', body: JSON.stringify(payload) })
+    save('currentColor', payload);
+  };
+
+  // Update central color preview with brightness scaling
+  window.updateColorPreview = function(){
+    const {red, green, blue, brightness} = window.colorState;
+    const scale = brightness / 100;
+    const r = Math.round(red * scale);
+    const g = Math.round(green * scale);
+    const b = Math.round(blue * scale);
+    const rgbStr = `rgb(${r}, ${g}, ${b})`;
+    
+    const preview = qs('.size-64 .absolute.inset-2');
+    if(preview) preview.style.backgroundColor = rgbStr;
+    
+    sendColorUpdate({red, green, blue, brightness});
+  };
+
+  // Adjust brightness
+  window.adjustBrightness = function(delta){
+    let newBrightness = window.colorState.brightness + delta;
+    newBrightness = Math.max(0, Math.min(100, newBrightness));
+    window.colorState.brightness = newBrightness;
+    
+    const displayEl = qs('.text-5xl.font-bold');
+    if(displayEl) displayEl.textContent = newBrightness + '%';
+    
+    const barEl = qs('.absolute.bottom-0.left-0.w-full.bg-white.h-\\[75\\%\\]');
+    if(barEl) barEl.style.height = newBrightness + '%';
+    
+    updateColorPreview();
+  };
+
   document.addEventListener('DOMContentLoaded', ()=>{
     const page = location.pathname.split('/').pop().toLowerCase();
 
@@ -100,6 +146,84 @@
       // show number of saved schedules in console
       const schedules = JSON.parse(localStorage.getItem('schedules')||'[]');
       toast('Loaded '+schedules.length+' saved schedule(s)');
+      
+      // Wire RGB sliders
+      const sliders = qsa('input[type="range"]');
+      const valueDisplays = qsa('.text-xs.font-mono.text-gray-300');
+      // Initialize slider positions and display numbers from colorState
+      sliders.forEach((slider, idx)=>{
+        const colors = ['red', 'green', 'blue'];
+        const key = colors[idx];
+        if(key && typeof window.colorState[key] === 'number'){
+          slider.value = window.colorState[key];
+          if(valueDisplays[idx]) valueDisplays[idx].textContent = window.colorState[key];
+        }
+
+        slider.addEventListener('input', ()=>{
+          const val = parseInt(slider.value);
+          const colors = ['red', 'green', 'blue'];
+          const colorKey = colors[idx];
+          if(colorKey) window.colorState[colorKey] = val;
+
+          if(valueDisplays[idx]) valueDisplays[idx].textContent = val;
+
+          updateColorPreview();
+        });
+        // update the visual knob position for this slider
+        function updateKnob(){
+          try{
+            const parent = slider.closest('.relative');
+            if(!parent) return;
+            const knob = parent.querySelector('.pointer-events-none');
+            if(!knob) return;
+            const min = parseInt(slider.min||0);
+            const max = parseInt(slider.max||255);
+            const pct = ((parseInt(slider.value)-min)/(max-min))*100;
+            knob.style.left = pct+'%';
+            knob.style.transform = 'translate(-50%, -50%)';
+          }catch(e){/* ignore */}
+        }
+        updateKnob();
+        slider.addEventListener('input', updateKnob);
+      });
+      
+      // Wire brightness +/- buttons
+      const brightnessButtons = qsa('button.size-8');
+      if(brightnessButtons.length >= 2){
+        brightnessButtons[0].addEventListener('click', ()=> adjustBrightness(5));
+        brightnessButtons[1].addEventListener('click', ()=> adjustBrightness(-5));
+      }
+      
+      // Wire preset selector circles
+      const presets = qsa('.snap-center.shrink-0.flex.flex-col');
+      presets.forEach(preset=>{
+        const colorEl = preset.querySelector('.size-14');
+        if(colorEl && !colorEl.querySelector('span')) {
+          preset.style.cursor = 'pointer';
+          preset.addEventListener('click', ()=>{
+            const bgColor = getComputedStyle(colorEl).backgroundColor;
+            // Parse rgb(r,g,b) -> extract values
+            const match = bgColor.match(/\d+/g);
+            if(match && match.length >= 3){
+              window.colorState.red = parseInt(match[0]);
+              window.colorState.green = parseInt(match[1]);
+              window.colorState.blue = parseInt(match[2]);
+              // update sliders and displays if present
+              const colors = ['red','green','blue'];
+              sliders.forEach((s, i)=>{
+                const k = colors[i];
+                if(k && typeof window.colorState[k] === 'number'){
+                  s.value = window.colorState[k];
+                  if(valueDisplays[i]) valueDisplays[i].textContent = window.colorState[k];
+                }
+              });
+              updateColorPreview();
+              toast('Preset loaded');
+            }
+          });
+        }
+      });
+      
       // power toggle: find span with power icon text
       const icons = qsa('.material-symbols-outlined');
       const powerIcon = icons.find(sp=> sp.textContent && sp.textContent.trim().toLowerCase().includes('power_settings_new'));
@@ -108,6 +232,11 @@
         save('powerOn', !on);
         toast('Power toggled to '+(!on));
       })}}
+      
+      // Initialize brightness display then color preview
+      const displayEl = qs('.text-5xl.font-bold');
+      if(displayEl) displayEl.textContent = window.colorState.brightness + '%';
+      updateColorPreview();
     }
 
   })
