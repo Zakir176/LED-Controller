@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Repeat &amp; Save Schedule</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b6cee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622", // Matches the requirement, close to #111722
+                        "surface-dark": "#1e293b", // Slightly lighter for cards/inputs
+                        "surface-dark-lighter": "#2a3850",
+                        "text-secondary": "#92a4c9",
+                    },
+                    fontFamily: {
+                        "display": ["Spline Sans", "Noto Sans", "sans-serif"],
+                        "body": ["Spline Sans", "Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Spline Sans", "Noto Sans", sans-serif;
+        }
+        /* Custom scrollbar hide for cleaner mobile look */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white antialiased min-h-screen flex flex-col overflow-x-hidden selection:bg-primary/30">
+<!-- Top App Bar -->
+<div class="flex items-center px-4 py-3 justify-between sticky top-0 z-10 bg-background-light dark:bg-background-dark">
+<a href="main.html" class="flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</a>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-10">Finalize Schedule</h2>
+</div>
+<!-- Progress Indicators -->
+<div class="flex w-full flex-row items-center justify-center gap-3 py-2">
+<div class="h-1.5 w-1.5 rounded-full bg-slate-300 dark:bg-surface-dark-lighter"></div>
+<div class="h-1.5 w-1.5 rounded-full bg-slate-300 dark:bg-surface-dark-lighter"></div>
+<div class="h-1.5 w-8 rounded-full bg-primary"></div>
+</div>
+<!-- Main Content Scroll Area -->
+<main class="flex-1 flex flex-col px-4 pb-28">
+<!-- Summary Preview Card (Context) -->
+<div class="mt-6 mb-2">
+<p class="text-sm font-medium text-text-secondary mb-3 px-1 uppercase tracking-wider">Summary</p>
+<div class="flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="size-12 rounded-full bg-gradient-to-tr from-orange-400 to-purple-600 flex-shrink-0" data-alt="Abstract gradient showing the selected color setting"></div>
+<div class="flex flex-col flex-1">
+<span class="text-lg font-bold">07:00 AM</span>
+<span class="text-sm text-text-secondary">Sunrise Wake-up</span>
+</div>
+<span class="material-symbols-outlined text-text-secondary">edit</span>
+</div>
+</div>
+<!-- Schedule Name Input -->
+<div class="mt-6">
+<h2 class="text-[24px] font-bold leading-tight text-left pb-3">Name your schedule</h2>
+<div class="flex flex-col w-full">
+<input class="form-input flex w-full min-w-0 resize-none overflow-hidden rounded-xl text-slate-900 dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary border-transparent bg-white dark:bg-surface-dark h-14 placeholder:text-text-secondary px-4 text-base font-normal leading-normal transition-all" placeholder="e.g., Morning Glow" type="text" value=""/>
+</div>
+</div>
+<!-- Recurrence Section -->
+<div class="mt-8">
+<h3 class="text-xl font-bold leading-tight text-left pb-4">Repeat on</h3>
+<!-- Quick Select Chips -->
+<div class="flex flex-wrap gap-2 mb-6">
+<button class="px-4 py-2 rounded-full border border-slate-300 dark:border-surface-dark-lighter bg-transparent text-sm font-medium text-slate-600 dark:text-text-secondary hover:bg-slate-100 dark:hover:bg-surface-dark-lighter transition-colors">
+                    Every Day
+                </button>
+<button class="px-4 py-2 rounded-full bg-primary text-white text-sm font-medium border border-primary shadow-lg shadow-primary/20">
+                    Weekdays
+                </button>
+<button class="px-4 py-2 rounded-full border border-slate-300 dark:border-surface-dark-lighter bg-transparent text-sm font-medium text-slate-600 dark:text-text-secondary hover:bg-slate-100 dark:hover:bg-surface-dark-lighter transition-colors">
+                    Weekends
+                </button>
+</div>
+<!-- Day Selector Toggles -->
+<div class="flex justify-between items-center gap-1 w-full max-w-[400px] mx-auto sm:mx-0">
+<!-- Active Day (Monday) -->
+<button class="group flex flex-col items-center gap-2">
+<div class="size-10 sm:size-11 flex items-center justify-center rounded-full bg-primary text-white font-semibold text-sm shadow-lg shadow-primary/25 transition-transform active:scale-95">
+                        M
+                    </div>
+</button>
+<!-- Active Day (Tuesday) -->
+<button class="group flex flex-col items-center gap-2">
+<div class="size-10 sm:size-11 flex items-center justify-center rounded-full bg-primary text-white font-semibold text-sm shadow-lg shadow-primary/25 transition-transform active:scale-95">
+                        T
+                    </div>
+</button>
+<!-- Active Day (Wednesday) -->
+<button class="group flex flex-col items-center gap-2">
+<div class="size-10 sm:size-11 flex items-center justify-center rounded-full bg-primary text-white font-semibold text-sm shadow-lg shadow-primary/25 transition-transform active:scale-95">
+                        W
+                    </div>
+</button>
+<!-- Active Day (Thursday) -->
+<button class="group flex flex-col items-center gap-2">
+<div class="size-10 sm:size-11 flex items-center justify-center rounded-full bg-primary text-white font-semibold text-sm shadow-lg shadow-primary/25 transition-transform active:scale-95">
+                        T
+                    </div>
+</button>
+<!-- Active Day (Friday) -->
+<button class="group flex flex-col items-center gap-2">
+<div class="size-10 sm:size-11 flex items-center justify-center rounded-full bg-primary text-white font-semibold text-sm shadow-lg shadow-primary/25 transition-transform active:scale-95">
+                        F
+                    </div>
+</button>
+<!-- Inactive Day (Saturday) -->
+<button class="group flex flex-col items-center gap-2">
+<div class="size-10 sm:size-11 flex items-center justify-center rounded-full bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-lighter text-slate-400 dark:text-text-secondary font-medium text-sm transition-all active:scale-95 hover:border-slate-400 dark:hover:border-slate-500">
+                        S
+                    </div>
+</button>
+<!-- Inactive Day (Sunday) -->
+<button class="group flex flex-col items-center gap-2">
+<div class="size-10 sm:size-11 flex items-center justify-center rounded-full bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-dark-lighter text-slate-400 dark:text-text-secondary font-medium text-sm transition-all active:scale-95 hover:border-slate-400 dark:hover:border-slate-500">
+                        S
+                    </div>
+</button>
+</div>
+</div>
+</main>
+<!-- Bottom Action Area -->
+<div class="fixed bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background-light dark:from-background-dark via-background-light dark:via-background-dark to-transparent pt-10">
+<button class="w-full h-14 rounded-full bg-primary hover:bg-blue-600 text-white text-base font-bold shadow-xl shadow-primary/20 flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined">check</span>
+            Save Schedule
+        </button>
+</div>
+<script src="app.js"></script>
+</body></html>
