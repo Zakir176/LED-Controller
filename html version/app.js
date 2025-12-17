@@ -5,6 +5,53 @@
   function save(key, val){ sessionStorage.setItem(key, JSON.stringify(val)) }
   function load(key){ try{ const v = sessionStorage.getItem(key); return v? JSON.parse(v): null }catch(e){return null} }
 
+  // ======== TOAST SYSTEM ========
+  function createToastContainer(){
+    let container = qs('#toast-container');
+    if(!container){
+      container = document.createElement('div');
+      container.id = 'toast-container';
+      container.style.cssText = 'position:fixed;top:20px;right:20px;z-index:9999;max-width:300px;pointer-events:none;';
+      document.body.appendChild(container);
+    }
+    return container;
+  }
+
+  window.showToast = function(msg, type='info', duration=3000){
+    const container = createToastContainer();
+    const toast = document.createElement('div');
+    const bgColor = type==='error'?'#ef4444':type==='success'?'#10b981':'#3b82f6';
+    toast.style.cssText = `
+      background: ${bgColor};
+      color: white;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      animation: slideIn 0.3s ease-out;
+      pointer-events: auto;
+      cursor: pointer;
+    `;
+    toast.textContent = msg;
+    toast.addEventListener('click', ()=> toast.remove());
+    container.appendChild(toast);
+    if(duration) setTimeout(()=> toast.remove(), duration);
+  };
+
+  // Add animation keyframes
+  if(!qs('style#toast-animations')){
+    const style = document.createElement('style');
+    style.id = 'toast-animations';
+    style.textContent = `
+      @keyframes slideIn {
+        from { transform: translateX(400px); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
   // ======== COLOR & BRIGHTNESS MANAGEMENT ========
   window.colorState = {
     red: 120,
@@ -15,7 +62,7 @@
 
   // Send color update to backend (placeholder)
   window.sendColorUpdate = function(payload){
-    console.log('[sendColorUpdate]', payload);
+    window.showToast('Color updated', 'success', 2000);
     // TODO: Replace with actual backend call
     // fetch('/api/led/color', { method: 'POST', body: JSON.stringify(payload) })
     save('currentColor', payload);
@@ -54,16 +101,22 @@
   document.addEventListener('DOMContentLoaded', ()=>{
     const page = location.pathname.split('/').pop().toLowerCase();
 
-    // Helper to set a temporary toast (non-blocking)
-    function toast(msg){ console.log('[app] '+msg) }
+    // Helper reference
+    const toast = window.showToast;
 
     // --- Name New Preset: capture input before navigating ---
     if(page === 'name new preset.html'){
       const input = qs('#preset-name');
       const next = qs('a[href$="preset color.html"]');
-      if(next && input) next.addEventListener('click', ()=>{
-        save('newPresetName', input.value || null);
-        toast('Saved preset name')
+      if(next && input) next.addEventListener('click', (e)=>{
+        const name = input.value.trim();
+        if(!name){
+          e.preventDefault();
+          toast('Please enter a preset name', 'error');
+          return;
+        }
+        save('newPresetName', name);
+        toast('Preset name saved', 'success');
       })
     }
 
@@ -71,13 +124,23 @@
     if(page === 'preset color.html'){
       const swatches = qsa('.size-10');
       const hexInput = qs('input[placeholder*="#HEX"]');
-      function setPreviewColor(c){ const preview = qs('.w-16.h-16.rounded-full') || qs('.h-12.w-12.rounded-xl'); if(preview) preview.style.backgroundColor = c; save('newPresetColor', c); }
+      let colorSelected = false;
+      function setPreviewColor(c){ const preview = qs('.w-16.h-16.rounded-full') || qs('.h-12.w-12.rounded-xl'); if(preview) preview.style.backgroundColor = c; save('newPresetColor', c); colorSelected = true; }
       swatches.forEach(s=> s.addEventListener('click', ()=>{
         const bg = getComputedStyle(s).backgroundColor;
         setPreviewColor(bg);
-        toast('Preset color selected')
+        toast('Color selected', 'success');
       }));
-      if(hexInput){ hexInput.addEventListener('change', ()=>{ setPreviewColor(hexInput.value); toast('Manual color saved') }) }
+      if(hexInput){ hexInput.addEventListener('change', ()=>{ setPreviewColor(hexInput.value); toast('Custom color saved', 'success') }) }
+      // Validate before leaving
+      const cancelBtn = qs('a[href$="preset_management.html"]');
+      const confirmBtns = qsa('a[href*="save"], button:has-text("Save"), a[href$="main.html"]');
+      if(cancelBtn) cancelBtn.addEventListener('click', (e)=>{
+        if(!colorSelected){
+          e.preventDefault();
+          toast('Please select a color', 'error');
+        }
+      })
     }
 
     // --- Choose Schedule Action: store which action was chosen ---
