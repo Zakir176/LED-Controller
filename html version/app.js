@@ -168,6 +168,7 @@
     // --- Select Schedule Effect: allow selecting an effect card ---
     if(page === 'select schedule effect.html'){
       const cards = qsa('.group.relative.cursor-pointer, .group.relative');
+      let effectSelected = false;
       cards.forEach(c=>{
         c.style.cursor = 'pointer';
         c.addEventListener('click', ()=>{
@@ -178,7 +179,17 @@
           const nameEl = c.querySelector('span.font-semibold, span.font-bold, span.text-base') || c.querySelector('span');
           const name = nameEl? nameEl.textContent.trim(): null;
           save('scheduleEffect', name);
+          effectSelected = true;
+          toast('Effect selected: '+name, 'success');
         })
+      });
+      // Validate confirm button
+      const confirmBtn = qs('a[href$="set schedule time.html"]');
+      if(confirmBtn) confirmBtn.addEventListener('click', (e)=>{
+        if(!effectSelected){
+          e.preventDefault();
+          toast('Please select an effect', 'error');
+        }
       })
     }
 
@@ -187,13 +198,23 @@
       const swatches = qsa('button.w-12, .size-10, button.snap-start');
       const preview = qs('.w-32.h-32');
       const manual = qs('input[placeholder*="HEX"]');
+      let colorSelected = false;
       swatches.forEach(s=> s.addEventListener('click', ()=>{
         const bg = getComputedStyle(s).backgroundColor || s.style.backgroundColor;
         if(preview) preview.style.backgroundColor = bg;
         save('scheduleColor', bg);
+        colorSelected = true;
+        toast('Color selected', 'success');
       }));
-      if(manual) manual.addEventListener('change', ()=>{ if(preview) preview.style.backgroundColor = manual.value; save('scheduleColor', manual.value) })
-      // Confirm button already navigates to time page; keep selection
+      if(manual) manual.addEventListener('change', ()=>{ if(preview) preview.style.backgroundColor = manual.value; save('scheduleColor', manual.value); colorSelected = true; toast('Custom color saved', 'success') })
+      // Validate confirm
+      const confirmBtn = qs('a[href$="repeat action.html"], a[href$="main.html"]');
+      if(confirmBtn) confirmBtn.addEventListener('click', (e)=>{
+        if(!colorSelected){
+          e.preventDefault();
+          toast('Please select a color', 'error');
+        }
+      })
     }
 
     // --- Select Schedule Time: simple time picker storing value ---
